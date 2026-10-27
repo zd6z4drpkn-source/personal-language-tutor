@@ -328,20 +328,6 @@ function ouvirAmiga() {
 
   window.speechSynthesis.speak(fala);
 }
-  const conversa = document.getElementById("conversaAmiga");
-  const texto = conversa.innerText;
-  
-  if ("speechSynthesis" in window) {
-    const fala = new SpeechSynthesisUtterance(texto);
-    fala.lang = "en-US";
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(fala);
-  } else {
-    document.getElementById("avisoAmiga").textContent =
-      "Seu navegador não oferece leitura em voz alta neste momento.";
-  }
-}
-
 </script>
 </body>
 </html>
