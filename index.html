@@ -87,7 +87,65 @@ input,textarea,select{width:100%;padding:12px;border:1px solid #dcded8;border-ra
 <button class="secondary" onclick="abrir('inicio')">← Voltar ao início</button>
 </section>
 
-<section id="cartoes" class="screen">
+
+
+<section id="amiga" class="screen">
+
+  <small>NOSSO CANTINHO DE INGLÊS 💗</small>
+
+  <h1>Conversa com sua amiga</h1>
+
+  <p>Vamos praticar, rir e aprender sem pressão.</p>
+
+  <div class="card">
+
+    <h2>Como vamos conversar hoje?</h2>
+
+    <div class="actions">
+
+      <button class="primary" onclick="modoAmiga('voz')">🎙️ Falar</button>
+
+      <button class="secondary" onclick="modoAmiga('texto')">⌨️ Digitar</button>
+
+    </div>
+
+    <p id="modoAmigaTexto" class="muted">Escolha como quer praticar hoje.</p>
+
+  </div>
+
+  <div class="card">
+
+    <div id="conversaAmiga" aria-live="polite">
+
+      <p><b>Amiga:</b> Hey, girl! 😂 Ready to practice some English? Don't worry, we're learning, not taking an exam!</p>
+
+      <p class="muted">Tradução: Ei, amiga! Pronta para praticar inglês? Relaxa, estamos aprendendo, não fazendo uma prova!</p>
+
+    </div>
+
+    <label for="mensagemAmiga"><b>Sua mensagem</b></label>
+
+    <textarea id="mensagemAmiga" rows="3" placeholder="Type something in English..."></textarea>
+
+    <div class="actions">
+
+      <button class="primary" onclick="enviarAmiga()">Enviar</button>
+
+      <button class="secondary" onclick="ouvirAmiga()">🔊 Ouvir</button>
+
+    </div>
+
+    <p id="avisoAmiga" class="muted" aria-live="polite"></p>
+
+  </div>
+
+  <div class="note">
+
+    Esta é a primeira versão visual. A conversa inteligente e as correções automáticas serão conectadas depois, com uma IA e uma conexão segura.
+
+  </div>
+
+</section><section id="cartoes" class="screen">
 <small>REVISÃO DE VOCABULÁRIO</small><h1>Flashcards ✨</h1><p>Tente lembrar o significado antes de revelar a tradução.</p>
 <div class="card word"><small id="numero">PALAVRA 1 DE 6</small><strong id="palavra">Hello</strong><p id="traducao" style="display:none;color:var(--green);font-size:18px"></p><button id="revelar" class="primary" onclick="revelar()">Revelar tradução</button></div>
 <div class="actions"><button class="secondary" onclick="marcar(false)">Ainda não sei</button><button class="primary" onclick="marcar(true)">Já aprendi ✓</button></div><p id="mensagemCartao" class="muted" aria-live="polite"></p>
