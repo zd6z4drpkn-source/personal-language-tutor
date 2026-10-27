@@ -243,6 +243,73 @@ dados.frases.forEach(f=>{const d=document.createElement("div");d.className="phra
 function salvarPreferencias(){dados.idioma=document.getElementById("idioma").value;dados.meta=document.getElementById("meta").value;salvar()}
 function reiniciar(){if(confirm("Quer apagar seu progresso e suas frases salvas neste navegador?")){dados={...padrao,palavras:[],frases:[]};salvar();respondida=false;document.getElementById("resposta").textContent="";document.getElementById("concluir").style.display="none";alert("Progresso reiniciado.")}}
 atualizar();
+
+let modoConversaAmiga = "texto";
+
+function modoAmiga(modo) {
+  modoConversaAmiga = modo;
+  const aviso = document.getElementById("avisoAmiga");
+  const campo = document.getElementById("mensagemAmiga");
+
+  if (modo === "voz") {
+    aviso.textContent = "Modo de voz escolhido! Se o microfone não estiver disponível, você pode digitar.";
+    campo.placeholder = "Você também pode digitar seu inglês aqui...";
+  } else {
+    aviso.textContent = "Modo de digitar escolhido. Manda ver, amiga! 💗";
+    campo.placeholder = "Type something in English...";
+  }
+}
+
+function enviarAmiga() {
+  const campo = document.getElementById("mensagemAmiga");
+  const conversa = document.getElementById("conversaAmiga");
+  const aviso = document.getElementById("avisoAmiga");
+  const mensagem = campo.value.trim();
+
+  if (!mensagem) {
+    aviso.textContent = "Escreve ou dita alguma coisa em inglês primeiro, amiga! 😊";
+    return;
+  }
+
+  const suaMensagem = document.createElement("p");
+  suaMensagem.innerHTML = "<b>Você:</b> ";
+  suaMensagem.appendChild(document.createTextNode(mensagem));
+  conversa.appendChild(suaMensagem);
+
+  const resposta = document.createElement("p");
+  resposta.innerHTML = "<b>Amiga:</b> ";
+  const texto = document.createElement("span");
+
+  const respostas = [
+    "Nice try, girl! 😂 Keep going!",
+    "I get you! Let's keep practicing. 💗",
+    "Good job! Don't be afraid to make mistakes!",
+    "Girl, we're learning! Try another sentence. 😄"
+  ];
+
+  texto.textContent = respostas[Math.floor(Math.random() * respostas.length)];
+  resposta.appendChild(texto);
+  conversa.appendChild(resposta);
+
+  campo.value = "";
+  aviso.textContent = "Esta é uma resposta de demonstração; a IA ainda não está conectada.";
+}
+
+function ouvirAmiga() {
+  const conversa = document.getElementById("conversaAmiga");
+  const texto = conversa.innerText;
+  
+  if ("speechSynthesis" in window) {
+    const fala = new SpeechSynthesisUtterance(texto);
+    fala.lang = "en-US";
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(fala);
+  } else {
+    document.getElementById("avisoAmiga").textContent =
+      "Seu navegador não oferece leitura em voz alta neste momento.";
+  }
+}
+
 </script>
 </body>
 </html>
