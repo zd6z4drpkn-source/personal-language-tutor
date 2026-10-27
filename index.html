@@ -307,8 +307,6 @@ function ouvirAmiga() {
 
   const texto = conversa.innerText.trim();
   if (!texto) {
-    window.speechSynthesis.getVoices();
-console.log(window.speechSynthesis.getVoices());
     aviso.textContent = "Ainda não há mensagem para ouvir.";
     return;
   }
