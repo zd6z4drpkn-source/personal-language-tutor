@@ -295,7 +295,39 @@ function enviarAmiga() {
   aviso.textContent = "Esta é uma resposta de demonstração; a IA ainda não está conectada.";
 }
 
+
 function ouvirAmiga() {
+  const aviso = document.getElementById("avisoAmiga");
+  const conversa = document.getElementById("conversaAmiga");
+
+  if (!("speechSynthesis" in window)) {
+    aviso.textContent = "Seu navegador não oferece leitura em voz alta.";
+    return;
+  }
+
+  const texto = conversa.innerText.trim();
+  if (!texto) {
+    aviso.textContent = "Ainda não há mensagem para ouvir.";
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+
+  const fala = new SpeechSynthesisUtterance(texto);
+  fala.lang = "en-US";
+  fala.rate = 0.85;
+  fala.onstart = function() {
+    aviso.textContent = "🔊 Lendo a conversa...";
+  };
+  fala.onend = function() {
+    aviso.textContent = "Prontinho, amiga! 💗";
+  };
+  fala.onerror = function() {
+    aviso.textContent = "O Safari não conseguiu iniciar a voz. Tente tocar em Ouvir novamente.";
+  };
+
+  window.speechSynthesis.speak(fala);
+}
   const conversa = document.getElementById("conversaAmiga");
   const texto = conversa.innerText;
   
