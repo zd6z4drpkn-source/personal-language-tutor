@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#315b48">
+<title>Meu Tutor de Idiomas</title>
+<style>
+:root{--bg:#f7f5ef;--green:#315b48;--light:#e4eee5;--line:#e7e4dc;--ink:#252b27;--muted:#737a74}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{max-width:600px;margin:auto;padding:22px 17px 100px}
+header{padding:8px 0 18px}
+small,.muted{color:var(--muted)}
+h1{font-size:27px;line-height:1.2;margin:8px 0}
+h2{font-size:19px;margin:0 0 12px}
+p{line-height:1.5}
+button{font:inherit;border:0;border-radius:13px;padding:12px 15px;cursor:pointer}
+.primary{background:var(--green);color:white;font-weight:650}
+.hero{background:var(--green);color:white;border-radius:23px;padding:23px;margin:15px 0 24px}
+.hero p{color:#e1ebe4}
+.hero small{color:#d7e4da}
+.hero button{background:#f1dba2;color:#252b27;font-weight:700}
+.section{margin-top:25px}
+.card{background:white;border:1px solid var(--line);border-radius:18px;padding:16px;margin:11px 0}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.stats .card{padding:13px 8px}
+.stats strong{display:block;font-size:23px;margin-bottom:5px}
+.stats small{font-size:10px}
+.screen{display:none}.screen.active{display:block}
+.tabs{position:fixed;z-index:3;bottom:9px;left:50%;transform:translateX(-50%);width:calc(100% - 18px);max-width:570px;display:flex;background:white;border:1px solid var(--line);border-radius:18px;padding:5px;box-shadow:0 5px 22px #0001}
+.tabs button{flex:1;background:white;color:#68716a;font-size:11px;padding:9px 2px}
+.tabs button.active{background:var(--light);color:var(--green);font-weight:700}
+.tabs span{display:block;font-size:18px;margin-bottom:3px}
+.choice{display:block;width:100%;text-align:left;background:#f7f5ef;border:1px solid var(--line);margin:7px 0}
+.word{text-align:center;padding:27px 12px}
+.word strong{display:block;font-size:34px;margin:16px 0}
+.actions{display:flex;gap:9px}.actions button{flex:1}
+.secondary{background:white;border:1px solid var(--line)}
+input,textarea,select{width:100%;padding:12px;border:1px solid #dcded8;border-radius:12px;font:inherit;margin:7px 0 14px;background:white}
+.progress{height:8px;background:var(--line);border-radius:9px;overflow:hidden;margin-top:12px}
+.progress div{height:100%;width:0;background:#83a88d;transition:width .2s}
+.note{background:#f0eadc;border-radius:13px;padding:13px;font-size:13px}
+.phrase{padding:12px 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+@media(max-width:360px){main{padding-left:12px;padding-right:12px}.stats strong{font-size:20px}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<small>SEU ESPAÇO DE APRENDIZAGEM</small>
+<h1>Olá! Vamos aprender? 🌿</h1>
+<p class="muted">Pequenos passos, grandes conquistas.</p>
+</header>
+
+<section id="inicio" class="screen active">
+<div class="hero">
+<small>SUA PRÓXIMA CONQUISTA</small>
+<h2 style="font-size:24px;line-height:1.3;margin-top:10px">Aprenda um idioma no seu ritmo.</h2>
+<p>Pratique palavras, descubra frases e acompanhe sua evolução sem pressão.</p>
+<button onclick="abrir('licao')">Começar a estudar →</button>
+</div>
+<h2>Meu progresso</h2>
+<div class="stats">
+<div class="card"><strong id="totalLicoes">0</strong><small>LIÇÕES</small></div>
+<div class="card"><strong id="totalPalavras">0</strong><small>PALAVRAS</small></div>
+<div class="card"><strong id="totalPontos">0</strong><small>PONTOS</small></div>
+</div>
+<div class="card">
+<div style="display:flex;justify-content:space-between;gap:8px"><strong>Seu caminho</strong><small id="textoProgresso">0% concluído</small></div>
+<div class="progress"><div id="barra"></div></div>
+</div>
+<div class="section">
+<h2>Continue aprendendo</h2>
+<div class="card"><h2>👋 Primeiras conversas</h2><p class="muted">Saudações e apresentações · 3 min</p><button class="primary" onclick="abrir('licao')">Abrir lição</button></div>
+<div class="card"><h2>🧠 Palavras do dia a dia</h2><p class="muted">Revise o vocabulário · 2 min</p><button class="primary" onclick="abrir('cartoes')">Revisar palavras</button></div>
+</div>
+</section>
+
+<section id="licao" class="screen">
+<small>LIÇÃO 01 · INICIANTE</small><h1>Vamos nos apresentar!</h1>
+<p>Aprenda expressões simples para começar uma conversa em inglês.</p>
+<div class="card"><small>EXPRESSÃO 1</small><h2 style="margin-top:10px">Hello!</h2><p>Significa <b>Olá!</b> É uma saudação comum e educada.</p><p class="muted">Pronúncia aproximada: he-lôu.</p><button class="primary" onclick="falar('Hello!')">🔊 Ouvir pronúncia</button></div>
+<div class="card"><h2>Teste rapidinho</h2><p>Como você diz “Olá!” em inglês?</p>
+<button class="choice" onclick="responder(false)">Goodbye</button><button class="choice" onclick="responder(true)">Hello</button><button class="choice" onclick="responder(false)">Thank you</button>
+<p id="resposta" aria-live="polite"></p><button id="concluir" class="primary" style="display:none" onclick="concluir()">Concluir lição ✓</button></div>
+<button class="secondary" onclick="abrir('inicio')">← Voltar ao início</button>
+</section>
+
+<section id="cartoes" class="screen">
+<small>REVISÃO DE VOCABULÁRIO</small><h1>Flashcards ✨</h1><p>Tente lembrar o significado antes de revelar a tradução.</p>
+<div class="card word"><small id="numero">PALAVRA 1 DE 6</small><strong id="palavra">Hello</strong><p id="traducao" style="display:none;color:var(--green);font-size:18px"></p><button id="revelar" class="primary" onclick="revelar()">Revelar tradução</button></div>
+<div class="actions"><button class="secondary" onclick="marcar(false)">Ainda não sei</button><button class="primary" onclick="marcar(true)">Já aprendi ✓</button></div><p id="mensagemCartao" class="muted" aria-live="polite"></p>
+</section>
+
+<section id="pratica" class="screen">
+<small>SEU CADERNO PESSOAL</small><h1>Pratique do seu jeito 💬</h1><p>Guarde frases que você quer aprender.</p>
+<div class="card"><label for="frase"><b>Frase em inglês</b></label><textarea id="frase" rows="3" placeholder="Ex.: I would like a coffee."></textarea><label for="significado"><b>Significado em português</b></label><input id="significado" placeholder="Ex.: Eu gostaria de um café."><button class="primary" onclick="salvarFrase()">Salvar no meu caderno</button></div>
+<h2>Minhas frases</h2><div id="frasesSalvas"></div>
+<div class="note">Esta versão inicial não usa IA para corrigir frases. Suas anotações ficam guardadas neste navegador.</div>
+</section>
+
+<section id="perfil" class="screen">
+<small>SUAS PREFERÊNCIAS</small><h1>Meu aprendizado</h1>
+<div class="card"><label for="idioma"><b>Idioma que estou aprendendo</b></label><select id="idioma" onchange="salvarPreferencias()"><option>Inglês</option><option>Espanhol</option><option>Francês</option><option>Italiano</option><option>Japonês</option><option>Outro</option></select>
+<label for="meta"><b>Minha meta diária</b></label><select id="meta" onchange="salvarPreferencias()"><option value="5">5 minutos</option><option value="10">10 minutos</option><option value="15">15 minutos</option><option value="20">20 minutos</option></select>
+<p class="muted">O progresso fica salvo no armazenamento local deste navegador. Ele não sincroniza automaticamente entre dispositivos.</p><button class="secondary" onclick="reiniciar()">Reiniciar progresso</button></div>
+</section>
+</main>
+
+<nav class="tabs" aria-label="Navegação">
+<button class="active" data-tela="inicio" onclick="abrir('inicio')"><span>⌂</span>Início</button>
+<button data-tela="licao" onclick="abrir('licao')"><span>📘</span>Lição</button>
+<button data-tela="cartoes" onclick="abrir('cartoes')"><span>🧠</span>Cartões</button>
+<button data-tela="pratica" onclick="abrir('pratica')"><span>✍️</span>Prática</button>
+<button data-tela="perfil" onclick="abrir('perfil')"><span>⚙️</span>Perfil</button>
+</nav>
+
+<script>
+const palavras=[
+{en:"Hello",pt:"Olá"},{en:"Thank you",pt:"Obrigado(a)"},
+{en:"Please",pt:"Por favor"},{en:"Goodbye",pt:"Tchau / Adeus"},
+{en:"Good morning",pt:"Bom dia"},{en:"How are you?",pt:"Como você está?"}
+];
+const padrao={licoes:0,palavras:[],pontos:0,frases:[],idioma:"Inglês",meta:"10"};
+let dados;
+try{dados={...padrao,...JSON.parse(localStorage.getItem("tutorIdiomasDados")||"{}")}}catch(e){dados={...padrao}}
+let indice=0,revelado=false,respondida=false;
+function salvar(){try{localStorage.setItem("tutorIdiomasDados",JSON.stringify(dados))}catch(e){} atualizar()}
+function atualizar(){
+document.getElementById("totalLicoes").textContent=dados.licoes;
+document.getElementById("totalPalavras").textContent=dados.palavras.length;
+document.getElementById("totalPontos").textContent=dados.pontos;
+const pct=Math.min(100,Math.round((dados.licoes+dados.palavras.length)/7*100));
+document.getElementById("textoProgresso").textContent=pct+"% concluído";
+document.getElementById("barra").style.width=pct+"%";
+renderFrases();
+}
+function abrir(id){
+document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("active",s.id===id));
+document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("active",b.dataset.tela===id));
+if(id==="cartoes")mostrarCartao();
+if(id==="perfil"){document.getElementById("idioma").value=dados.idioma;document.getElementById("meta").value=dados.meta}
+window.scrollTo(0,0);
+}
+function falar(texto){
+if("speechSynthesis" in window){const fala=new SpeechSynthesisUtterance(texto);fala.lang="en-US";speechSynthesis.speak(fala)}
+else alert("A leitura de voz não está disponível neste navegador.");
+}
+function responder(correta){
+const el=document.getElementById("resposta");
+if(correta){el.textContent="Isso mesmo! Hello significa Olá. 🎉";el.style.color="#315b48";respondida=true;document.getElementById("concluir").style.display="inline-block"}
+else{el.textContent="Ainda não! Tente novamente. A resposta é uma saudação.";el.style.color="#a34835"}
+}
+function concluir(){
+if(!respondida)return;
+if(dados.licoes<1){dados.licoes=1;dados.pontos+=10;salvar()}
+document.getElementById("concluir").textContent="Lição concluída ✓";
+}
+function mostrarCartao(){
+document.getElementById("numero").textContent="PALAVRA "+(indice+1)+" DE "+palavras.length;
+document.getElementById("palavra").textContent=palavras[indice].en;
+document.getElementById("traducao").textContent=palavras[indice].pt;
+document.getElementById("traducao").style.display=revelado?"block":"none";
+document.getElementById("revelar").style.display=revelado?"none":"inline-block";
+}
+function revelar(){revelado=true;mostrarCartao()}
+function marcar(aprendeu){
+const p=palavras[indice];
+if(aprendeu&&!dados.palavras.includes(p.en)){dados.palavras.push(p.en);dados.pontos+=2;salvar()}
+document.getElementById("mensagemCartao").textContent=aprendeu?"Palavra registrada! 💚":"Sem problema — pratique de novo quando quiser.";
+indice=(indice+1)%palavras.length;revelado=false;mostrarCartao();
+}
+function salvarFrase(){
+const en=document.getElementById("frase").value.trim(),pt=document.getElementById("significado").value.trim();
+if(!en){alert("Escreva uma frase primeiro.");return}
+dados.frases.unshift({en,pt});salvar();document.getElementById("frase").value="";document.getElementById("significado").value="";
+}
+function renderFrases(){
+const area=document.getElementById("frasesSalvas");if(!area)return;
+area.innerHTML="";
+if(!dados.frases.length){area.innerHTML='<p class="muted">Suas frases salvas aparecerão aqui.</p>';return}
+dados.frases.forEach(f=>{const d=document.createElement("div");d.className="phrase";const b=document.createElement("b");b.textContent=f.en;d.appendChild(b);if(f.pt){const p=document.createElement("p");p.textContent=f.pt;p.style.margin="5px 0";d.appendChild(p)}area.appendChild(d)})
+}
+function salvarPreferencias(){dados.idioma=document.getElementById("idioma").value;dados.meta=document.getElementById("meta").value;salvar()}
+function reiniciar(){if(confirm("Quer apagar seu progresso e suas frases salvas neste navegador?")){dados={...padrao,palavras:[],frases:[]};salvar();respondida=false;document.getElementById("resposta").textContent="";document.getElementById("concluir").style.display="none";alert("Progresso reiniciado.")}}
+atualizar();
+</script>
+</body>
+</html>
